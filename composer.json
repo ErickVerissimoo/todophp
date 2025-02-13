@@ -1,0 +1,15 @@
+{
+    "name": "erick/todo",
+    "autoload": {
+        "psr-4": {
+            "Erick\\Todo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ErickVerissimoo",
+            "email": "erickverissimodasilva144@gmail.com"
+        }
+    ],
+    "require": {}
+}
