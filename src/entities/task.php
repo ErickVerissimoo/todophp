@@ -2,7 +2,7 @@
 namespace Src\Entities;
 use Datetime;
 class Task{
-    public int $id;
+    private int $id;
     public string $name;
     public string $description;
     public DateTime $scheduledAt;

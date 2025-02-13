@@ -2,7 +2,7 @@
     "name": "erick/todo",
     "autoload": {
         "psr-4": {
-            "Erick\\Todo\\": "src/"
+"Src\\": "src/"
         }
     },
     "authors": [
@@ -11,9 +11,10 @@
             "email": "erickverissimodasilva144@gmail.com"
         }
     ],
+    "require": {},
     "require-dev": {
-            "pestphp/pest": "^3.7"        
-        },
+        "pestphp/pest": "^3.7"
+    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
