@@ -1,8 +1,10 @@
 <?php
+namespace Src\Entities\Mapper\Interface;
+use Src\Entities\task;
 interface MapperInterface{
-    function save($data): void;
-    function delete($id): void;
-    function find($id): ?object;
+    function save(task $data): ?object;
+    function delete(int $id): void;
+    function find(int $id): ?object;
     function findAll(): array;
-    function update($entity): void;
+    function update(task $entity): void;
 }
