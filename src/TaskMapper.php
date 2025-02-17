@@ -8,6 +8,11 @@ use Medoo\Medoo;
 class TaskMapper 
 {
     private Medoo $medoo;
+public function __construct(Medoo $medoo)
+{
+    $this->medoo = $medoo;
+}
+
     /**
      * @inheritDoc
      */
@@ -20,17 +25,12 @@ class TaskMapper
      * @inheritDoc
      */
     public function get(?string $name, ?int $id): Task {
-        if ($id === null and $name === null) {
-            throw new \InvalidArgumentException('the name and the id params cannot be null');
+        if ($id === null && $name === null) {
+            throw new \InvalidArgumentException('Both name and id parameters cannot be null');
         }
-        elseif (
-            $id === null and $name !==null
-        ){
-            return new Task($this->medoo->select('tarefa', ['*'], ['name'=> $name]));
-        }else{
-            return new Task($this->medoo->select('tarefa', ['*'], ['id' => $id]));
-        }
-
+        
+        $filter = $id !== null ? ['id' => $id] : ['name' => $name];
+        return new Task($this->medoo->select('tarefa', ['*'], $filter));
 
 
     }
@@ -48,13 +48,21 @@ class TaskMapper
     /**
      * @inheritDoc
      */
-    public function insert(Task $data): void {
+    public function insert(Task $data): self {
         $this ->medoo->insert('tarefa', ['name'=> $data->getName(),'description'=> $data->getDescription(), 'scheduled' => $data->getScheduled()->format(DateTime::ATOM)]);
+    return $this;
     }
     
     /**
      * @inheritDoc
      */
-    public function update(mixed $data): void {
+    public function update(Task $data): void {
+        $this 
+        ->medoo
+        ->update('tarefa', ['name' => $data
+        ->getName(),
+        'description' => $data
+        ->getDescription(),
+        'scheduled' => $data->getScheduled() ->format(DateTime::ATOM)], ['id'=> $data->getId()]);
     }
 }

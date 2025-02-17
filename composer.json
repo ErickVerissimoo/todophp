@@ -9,7 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Erick\\Todo\\": "src/"
+            "Erick\\Todo\\": "src/",
+            "Tests\\":"tests/"
         }
     },
     "authors": [

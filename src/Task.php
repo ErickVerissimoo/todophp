@@ -6,6 +6,7 @@ require __DIR__.'/../vendor/autoload.php';
 use DateTime;
 class Task
 {
+    private ?int $id;
   private string $name;
   private string $description;
   private DateTime $scheduled;
@@ -47,6 +48,18 @@ public function __construct(array $arrei) {
     public function setScheduled(DateTime $scheduled): self
     {
         $this->scheduled = $scheduled;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
 
         return $this;
     }

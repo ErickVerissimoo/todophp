@@ -14,7 +14,7 @@ $data = new Medoo(
     'username' => 'root',
     'password' => 'erick']
 );
-$sql = file_get_contents('script.sql');
+$sql = file_get_contents(__DIR__.'/script.sql');
 echo str_replace(["\n", "\r"], ['[\\n]', '[\\r]'], $sql);
 $queries = explode(';', $sql);
 print_r($queries);
