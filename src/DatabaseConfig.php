@@ -1,7 +1,10 @@
 <?php
 namespace Erick\Todo;
-require __DIR__.'/../vendor/autoload.php';
+
 use Medoo\Medoo;
+
+require __DIR__.'/../vendor/autoload.php';
+
 
 $data = new Medoo(
 [
@@ -9,9 +12,7 @@ $data = new Medoo(
     "database" =>'todo',
     'host'=>'localhost',
     'username' => 'root',
-    'password' => 'erick'
-]
-
+    'password' => 'erick']
 );
 $sql = file_get_contents('script.sql');
 echo str_replace(["\n", "\r"], ['[\\n]', '[\\r]'], $sql);
@@ -23,7 +24,7 @@ foreach ($queries as $query) {
         $data->exec($query);
     }
 }
-
+return $data;
 
 
 
