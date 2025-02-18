@@ -1,6 +1,6 @@
 <?php
 
-namespace Erick\Todo;
+namespace Erick\Todo\entities;
 
 class User
 {
@@ -9,11 +9,11 @@ class User
     private string $name;
     private string $password;
 
-   public function __construct(?int $id, string $email, string $name, string $password){
-    $this->id = $id;
-    $this->email = $email;
-    $this->name = $name;
-    $this->password = $password;
+   public function __construct(array $values){
+    $this->id = $values['id'];
+    $this->email = $values['email'];
+    $this->name = $values['name'];
+    $this->password = $values['password'];
     }
     
 

@@ -1,7 +1,7 @@
 <?php
 
-namespace Erick\Todo;
-require __DIR__ . '/../vendor/autoload.php';
+namespace Erick\Todo\entities;
+require __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
 class Task

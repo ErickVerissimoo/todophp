@@ -1,10 +1,12 @@
 <?php
 
-namespace Erick\Todo;
+namespace Erick\Todo\service;
 
+use Erick\Todo\entities\Task;
+use Erick\Todo\mapper\TaskMapper;
 use Exception;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 class TaskService
 {

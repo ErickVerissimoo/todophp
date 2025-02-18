@@ -1,9 +1,10 @@
 <?php
 
-namespace Erick\Todo;
-require __DIR__ . '/../vendor/autoload.php';
+namespace Erick\Todo\mapper;
+require __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
+use Erick\Todo\entities\Task;
 use Medoo\Medoo;
 class TaskMapper
 {
@@ -74,4 +75,6 @@ class TaskMapper
                 'scheduled' => $data->getScheduled()->format(DateTime::ATOM)
             ], ['id' => $data->getId()]);
     }
+
+    
 }

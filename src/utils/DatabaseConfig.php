@@ -1,9 +1,9 @@
 <?php
-namespace Erick\Todo;
+namespace Erick\Todo\utils;
 
 use Medoo\Medoo;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 
 $data = new Medoo(

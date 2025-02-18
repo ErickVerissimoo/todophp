@@ -1,6 +1,8 @@
 <?php
 
-namespace Erick\Todo;
+namespace Erick\Todo\service;
+
+use Erick\Todo\entities\User;
 
 interface AuthService
 {

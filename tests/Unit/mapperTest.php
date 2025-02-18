@@ -2,12 +2,12 @@
 namespace Tests\Unit;
 require __DIR__ . "/../../vendor/autoload.php";
 use DateTime;
-use \Erick\Todo\Task;
-use Erick\Todo\TaskMapper;
+use \Erick\Todo\entities\Task;
+use Erick\Todo\mapper\TaskMapper;
 
-$config = require_once __DIR__ . "/../../src/DatabaseConfig.php";
+$config = require_once __DIR__ . "/../../src/utils/DatabaseConfig.php";
 $data = new DateTime();
-$task = new Task(['name' => 'erick', 'description' => 'ugue foi', 'scheduled' => $data->format(DateTime::ATOM)]);
+$task = new Task(['name' => 'erickkkkkkkk', 'description' => 'ugue foi', 'scheduled' => $data->format(DateTime::ATOM)]);
 $taskMapper = new TaskMapper($config);
 test('inserção', function () use ($taskMapper, $task) {
     expect($taskMapper->insert($task))->toBeInt() ->toEqual(1);
@@ -19,7 +19,7 @@ test('get teste', function () use ($taskMapper) {
 });
 
 test('existe', function () use ($taskMapper) {
-expect($taskMapper->has(   'erick')) ->toBeTrue('não existe');
+expect($taskMapper->has(   'erickkkkkkkk')) ->toBeTrue('não existe');
 
 });
 

@@ -2,13 +2,31 @@
 namespace Tests\Unit;
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-use Erick\Todo\AuthServiceImpl;
-use Erick\Todo\User;
+use Erick\Todo\entities\User;
+use Erick\Todo\mapper\UserMapper;
+use Erick\Todo\service\AuthServiceImpl; 
+
+test("register", function (): void {
+    $medoo = include 'src/utils/DatabaseConfig.php';
+    $auth = new AuthServiceImpl(new UserMapper($medoo));
+
+    $key= ['id', 'email', 'name', 'password'];
+    $values= [null, 'erickverissimodasilva144', 'ugue', 'ugue'];
+    $combined = array_combine($key, $values);
+    $user = new User($combined);
+
+expect($auth->register($user))->toBeObject();
+});
 
 
-test("generate token", function () {
-$auth = new AuthServiceImpl();
-
-expect($auth->login(new User(null, 'erickverissimodasilva144', 'ugue', 'ugue')))->toBeString('erro no token');
+test("generate login", function () {
+    $medoo = include 'src/utils/DatabaseConfig.php';
+    $auth = new AuthServiceImpl(new UserMapper($medoo));
+$key= ['id', 'email', 'name', 'password'];
+$values= [null, 'verissimoerick@gmail', 'ugue', 'ugue'];
+$combined = array_combine($key, $values);
+$use= new User($combined);
+$auth->register(user: $use);
+expect($auth->login($use))->toBeString('erro no token');
 
 });
