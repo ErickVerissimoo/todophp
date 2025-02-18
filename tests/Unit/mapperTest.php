@@ -5,7 +5,7 @@ use DateTime;
 use \Erick\Todo\entities\Task;
 use Erick\Todo\mapper\TaskMapper;
 
-$config = require_once __DIR__ . "/../../src/utils/DatabaseConfig.php";
+$config = include 'DbTestsCreate.php';
 $data = new DateTime();
 $task = new Task(['name' => 'erickkkkkkkk', 'description' => 'ugue foi', 'scheduled' => $data->format(DateTime::ATOM)]);
 $taskMapper = new TaskMapper($config);

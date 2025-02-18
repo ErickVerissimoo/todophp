@@ -7,20 +7,20 @@ use Erick\Todo\mapper\UserMapper;
 use Erick\Todo\service\AuthServiceImpl; 
 
 test("register", function (): void {
-    $medoo = include 'src/utils/DatabaseConfig.php';
+    $medoo = include 'DbTestsCreate.php';
     $auth = new AuthServiceImpl(new UserMapper($medoo));
 
     $key= ['id', 'email', 'name', 'password'];
     $values= [null, 'erickverissimodasilva144', 'ugue', 'ugue'];
     $combined = array_combine($key, $values);
     $user = new User($combined);
-
-expect($auth->register($user))->toBeObject();
+    
+expect($auth->register($user))->toBeInstanceOf(User::class);
 });
 
 
 test("generate login", function () {
-    $medoo = include 'src/utils/DatabaseConfig.php';
+    $medoo = include 'DbTestsCreate.php';
     $auth = new AuthServiceImpl(new UserMapper($medoo));
 $key= ['id', 'email', 'name', 'password'];
 $values= [null, 'verissimoerick@gmail', 'ugue', 'ugue'];
