@@ -7,7 +7,6 @@ use Exception;
 use Medoo\Medoo;
 use stdClass;
 
-use function PHPUnit\Framework\isNull;
 
 class UserMapper
 {
