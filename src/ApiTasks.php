@@ -1,20 +1,17 @@
 <?php
 namespace Erick\Todo;
 
-use FastRoute\RouteCollector;
-
-use function FastRoute\simpleDispatcher;
+use Bramus\Router\Router as route;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$router = simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/hello', function () {
-        echo "ugue";
-    });
-});
+$router = new route();
+
+$router->get('/todo', function (){
+
+});   
 
 
-$httpMethod = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
 
- $router->dispatch($httpMethod, $uri);
+
+$router->run()  ;
