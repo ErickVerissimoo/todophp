@@ -1,20 +1,26 @@
 <?php
 
 namespace Erick\Todo;
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use DateTime;
 class Task
 {
     private ?int $id;
-  private string $name;
-  private string $description;
-  private DateTime $scheduled;
-public function __construct(array $arrei) {
-    $this->name = $arrei["name"];
-    $this->description = $arrei["description"];
-    $this->scheduled =  new DateTime($arrei["scheduled"]);
-}
+    private string $name;
+    private string $description;
+    private DateTime $scheduled;
+
+    private int $userId; 
+
+
+
+    public function __construct(array $arrei)
+    {
+        $this->name = $arrei["name"];
+        $this->description = $arrei["description"];
+        $this->scheduled = new DateTime($arrei["scheduled"]);
+    }
 
     public function getName(): string
     {
@@ -60,6 +66,18 @@ public function __construct(array $arrei) {
     public function setId(?int $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
