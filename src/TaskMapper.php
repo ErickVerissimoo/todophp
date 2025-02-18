@@ -32,7 +32,9 @@ class TaskMapper
         }
 
         $filter = $id !== null ? ['id' => $id] : ['name' => $name];
-        return new Task($this->medoo->select('tarefa', ['*'], $filter));
+
+        
+        return new Task($this->medoo->get('tarefa', '*', $filter));
 
 
     }
@@ -51,10 +53,10 @@ class TaskMapper
     /**
      * @inheritDoc
      */
-    public function insert(Task $data): self
+    public function insert(Task $data):int
     {
         $this->medoo->insert('tarefa', ['name' => $data->getName(), 'description' => $data->getDescription(), 'scheduled' => $data->getScheduled()->format(DateTime::ATOM)]);
-        return $this;
+        return (int) $this->medoo->id();
     }
 
     /**
