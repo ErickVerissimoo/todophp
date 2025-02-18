@@ -16,9 +16,9 @@ $data = new Medoo(
     ]
 );
 $sql = file_get_contents(__DIR__ . '/script.sql');
-echo str_replace(["\n", "\r"], ['[\\n]', '[\\r]'], $sql);
+// echo str_replace(search: ["\n", "\r"], ['[\\n]', '[\\r]'], $sql);
 $queries = explode(';', $sql);
-print_r($queries);
+// print_r($queries);
 foreach ($queries as $query) {
     $query = trim(string: $query);
     if (!empty($query)) {
