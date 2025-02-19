@@ -18,7 +18,7 @@ class AuthServiceImpl implements AuthService
      */
     public function login(User $usuario):string {
       $email = $usuario->getEmail();
-        $user = $this->auth->get(email:$email);
+        $user = $this->auth->get(email:$email, id:$usuario->getId());
         if(!password_verify($usuario->getPassword(), $user->getPassword())) {
             throw new Exception('Email ou senha inválidos');
         }

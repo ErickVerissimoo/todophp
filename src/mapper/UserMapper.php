@@ -27,7 +27,7 @@ class UserMapper
         
         }
 
-        public function get(int $id = null, string $email = null): User {
+        public function get(?int $id , ?string $email): User {
             if ($id === null && $email === null) {
                 throw new Exception('Both id and email cannot be null');
             }

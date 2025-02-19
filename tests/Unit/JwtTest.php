@@ -27,6 +27,6 @@ $values= [null, 'verissimoerick@gmail', 'ugue', 'ugue'];
 $combined = array_combine($key, $values);
 $use= new User($combined);
 $auth->register(user: $use);
-expect($auth->login($use))->toBeString('erro no token');
+expect($auth->login($use))->toBeString(message: 'erro no token');
 
 });

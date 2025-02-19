@@ -1,14 +1,32 @@
 <?php
-
 namespace Erick\Todo\service;
 require __DIR__ . '/../../vendor/autoload.php';
-use Medoo\Medoo;
+
+use Erick\Todo\entities\User;
+use Erick\Todo\mapper\UserMapper;
 class UserService
 {
-private readonly Medoo $medoo;
+private UserMapper $mapper;
 
-public function __construct(Medoo $var) {
-    $this->medoo = $var;
+public function __construct(Usermapper $var) {
+$this ->mapper=$var;
 }
+public function create(User $data) {
+$this ->mapper->insert($data);
+    
+}
+public function delete (User $data) {
+    $this ->mapper->delete($data->getId());
+
+
+}
+
+
+public function get (User $data):User {
+  return  $this ->mapper->get(id:$data->getId(), email: $data->getEmail());
+
+
+}
+
 
 }

@@ -3,11 +3,13 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use Medoo\Medoo;
 
-
 $database = new Medoo([
 	'type' => 'sqlite',
-	'database' => ':memory:'
+	'database' => ':memory:',
+    'error'=> PDO::ERRMODE_EXCEPTION
 ]);
+
+
 $sql = file_get_contents('tests/Unit/script.sql');
 $queries = explode(';', $sql);
 foreach ($queries as $query) {
