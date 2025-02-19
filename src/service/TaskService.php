@@ -5,6 +5,7 @@ namespace Erick\Todo\service;
 use Erick\Todo\entities\Task;
 use Erick\Todo\mapper\TaskMapper;
 use Exception;
+use Generator;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -16,6 +17,7 @@ class TaskService
 
     public function __construct(TaskMapper $repository){
         $this->repository = $repository;
+
     }
 
     public function create(Task $task) : void {
@@ -30,12 +32,15 @@ class TaskService
         $this->repository->delete( $id); 
     }
 
-    public function get(?string $name, ?int $id) : Task {
-$value =   $this->repository->get($name, $id);
+    public function get(?string $name=null, ?int $id=null) : Task {
 
-return isset($value) ? $value : throw new Exception('entity not founded');
+return  $this->repository->get($name, $id);
 
 
+    }
+    public  function getAll():Generator
+    {
+    return $this->repository-> getAll();        
     }
 
 }

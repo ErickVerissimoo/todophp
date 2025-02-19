@@ -5,7 +5,9 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
 use Erick\Todo\entities\Task;
+use Generator;
 use Medoo\Medoo;
+
 class TaskMapper
 {
     private Medoo $medoo;
@@ -29,24 +31,28 @@ class TaskMapper
     public function get(?string $name, ?int $id): Task
     {
         if ($id === null && $name === null) {
-            throw new \InvalidArgumentException('Both name and id parameters cannot be null');
+            throw new \InvalidArgumentException('Ambos os parâmetros name e id não podem ser nulos');
         }
-
+    
         $filter = $id !== null ? ['id' => $id] : ['name' => $name];
+    
+        $task = $this->medoo->get('tarefa', '*', $filter);
 
-        
-        return new Task($this->medoo->get('tarefa', '*', $filter));
-
-
+        if ($task === null) {
+            http_response_code(404);
+            die('entidade não encontrada');
+        }
+    
+        return new Task($task);
     }
-
+    
     /**
      * @inheritDoc
      */
     public function has(string $name): bool
     {
 
-        return $this->medoo->count('tarefa', ['name' => $name]) > 0;
+        return $this->medoo->has('tarefa', ['name'=> $name]);
 
 
     }
@@ -75,6 +81,11 @@ class TaskMapper
                 'scheduled' => $data->getScheduled()->format(DateTime::ATOM)
             ], ['id' => $data->getId()]);
     }
+ public function getAll():Generator {
+    $tasks = $this->medoo->query('select * from tarefa'); 
 
-    
+   foreach($tasks as $task){
+yield new Task($task);
+   }
+}
 }

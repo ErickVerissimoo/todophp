@@ -2,7 +2,9 @@
 
 namespace Erick\Todo\entities;
 
-class User
+use JsonSerializable;
+
+class User implements JsonSerializable
 {
     private ?int $id;
     private string $email;
@@ -65,5 +67,14 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize():array {
+
+        return get_object_vars(
+$this
+        );
     }
 }

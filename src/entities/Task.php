@@ -4,7 +4,9 @@ namespace Erick\Todo\entities;
 require __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
-class Task
+use JsonSerializable;
+
+class Task implements JsonSerializable
 {
     private ?int $id;
     private string $name;
@@ -80,5 +82,11 @@ class Task
         $this->userId = $userId;
 
         return $this;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize():array {
+        return get_object_vars($this);
     }
 }
