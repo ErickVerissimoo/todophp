@@ -27,6 +27,20 @@ $values= [null, 'verissimoerick@gmail', 'ugue', 'ugue'];
 $combined = array_combine($key, $values);
 $use= new User($combined);
 $auth->register(user: $use);
-expect($auth->login($use))->toBeString(message: 'erro no token');
+expect($auth->login($combined))->toBeString(message: 'erro no token');
+
+});
+
+test("validate login", function () {
+    $medoo = include 'DbTestsCreate.php';
+    $auth = new AuthServiceImpl(new UserMapper($medoo));
+$key= ['id', 'email', 'name', 'password'];
+$values= [null, 'verissimoerick@gmail', 'ugue', 'ugue'];
+$combined = array_combine($key, $values);
+$use= new User($combined);
+$auth->register(user: $use);
+$token = $auth->login($combined);
+echo $token;
+expect($auth ->validateToken($token))->toBeTrue();
 
 });

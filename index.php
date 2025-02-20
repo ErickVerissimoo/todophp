@@ -12,60 +12,79 @@ use Erick\Todo\service\AuthServiceImpl;
 use Erick\Todo\service\TaskService;
 use Flight;
 
+use function PHPUnit\Framework\isNull;
+
 $medoo = include_once 'src/utils/DatabaseConfig.php';
-$auth = new AuthServiceImpl(new UserMapper($medoo));
-$task = new TaskService(new TaskMapper($medoo));
+$auth = new AuthServiceImpl(mapper: new UserMapper($medoo));
 
-Flight::before('route', function () use ($auth){
-    if(    str_contains(Flight::request()->url, '/user')){
-return;
+$task = new TaskService(repository: new TaskMapper($medoo));
+
+$callable = function () use ($auth) {
+    $header = Flight::request()->getHeader('Authorization');
+    
+if (empty($header) || is_null($header)) {
+        Flight::jsonHalt(['message' => 'Without authentication'], 401);
     }
-    $token = Flight::request()->getHeader('Authorization');
 
-});
+    $token = trim($header);
+    
+    if (!$auth->validateToken($token)) {
+        Flight::jsonHalt(['message' => 'Invalid token'], 401);
+    }
+};
 
-Flight::route('GET /task/@id',  fn (int $id) =>
+
+
+Flight::group('/task', function() use($task) :void{
+
+
+
+Flight::route('GET /@id',  fn (int $id) =>
  Flight::json($task->get(id:$id ), 200));
 
-Flight::post('/task', function () use ($task) {
+Flight::route('POST /', function () use ($task) {
 $body = Flight::request()->data->getData();
 $task ->create(new Task($body));
 Flight::response()->status(201);
 });
 
 
-Flight::route('GET /task', fn()=>
+Flight::route('GET /', fn()=>
 Flight::json(iterator_to_array($task->getAll()))
 );
 
 
 
-Flight::delete('/task/@id', function ($id)
+Flight::route('DELETE /@id', function ($id)
  use ($task):void { $task->delete($id);
     Flight::response()->status(204);
 });
 
 
-Flight::put('/task', function () use ($task) {
+Flight::route('PUT /', function () use ($task) {
     $body = Flight::request()->data->getData();
     $task->update(new Task($body));
     Flight::response()->status(204);
-});
+}); 
 
-Flight::post('/user/register', function () use ($auth):void {
+},[$callable]);
+
+
+
+Flight::route('POST /user/register', function () use ($auth):void {
     $body = Flight::request()->data->getData();
     $auth->register(new User($body));
     Flight::response()->status(202);
 
 });
-Flight::post('/user/login', function () use ($auth):void {
+Flight::route('POST /user/login', function () use ($auth):void {
     $body = Flight::request()->data->getData();
     $token = $auth->login($body); 
     Flight::response()->status(203);
     Flight::response()->header('Authorization', $token);
 
 
-});
+}, );
 
 
 Flight::start();

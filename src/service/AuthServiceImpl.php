@@ -46,8 +46,13 @@ class AuthServiceImpl implements AuthService
         return $user;
     }
 
-    function validateToken(string $token) : bool {
-      return  JWT::decode($token,         new Key($token, algorithm: 'HS256'))!==null ;
+    public function validateToken(string $token): bool {
+        try {
+            JWT::decode($token, new Key($this->jwt, 'HS256'));
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
 }

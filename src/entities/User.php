@@ -12,7 +12,6 @@ class User implements JsonSerializable
     private string $password;
 
    public function __construct(array $values){
-    $this->id = $values['id'];
     $this->email = $values['email'];
     $this->name = $values['name'];
     $this->password = $values['password'];
