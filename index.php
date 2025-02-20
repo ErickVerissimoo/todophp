@@ -22,10 +22,12 @@ $task = new TaskService(repository: new TaskMapper($medoo));
 $callable = function () use ($auth) {
     $header = Flight::request()->getHeader('Authorization');
     
-if (empty($header) || is_null($header)) {
+if (empty($header) || $header === null) {
         Flight::jsonHalt(['message' => 'Without authentication'], 401);
     }
-
+if(str_starts_with($header,'Bearer ')) {
+$header = str_replace('Bearer ','',$header );
+}
     $token = trim($header);
     
     if (!$auth->validateToken($token)) {
@@ -84,7 +86,7 @@ Flight::route('POST /user/login', function () use ($auth):void {
     Flight::response()->header('Authorization', $token);
 
 
-}, );
+} );
 
 
 Flight::start();

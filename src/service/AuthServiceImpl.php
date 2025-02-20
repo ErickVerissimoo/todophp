@@ -2,6 +2,7 @@
 namespace Erick\Todo\service;
 require __DIR__ . '/../../vendor/autoload.php';
 
+use DateTime;
 use Erick\Todo\entities\User;
 use Erick\Todo\mapper\UserMapper;
 use Exception;
@@ -13,7 +14,7 @@ class AuthServiceImpl implements AuthService
     private string $jwt;
     private UserMapper $auth;
     public function __construct(UserMapper $mapper) {
-        $this->jwt = include 'src/utils/JwtService.php';
+        $this->jwt = include_once 'src/utils/JwtService.php';
         $this->auth = $mapper;        
     }    /**
      * @inheritDoc
@@ -24,13 +25,13 @@ class AuthServiceImpl implements AuthService
         if(!password_verify($dados['password'], $user->getPassword())) {
             throw new Exception('Email ou senha inválidos');
         }
-
+$data =new DateTime('now');
         $payload = [
             
                 "sub"=> $user->getEmail(),
                 "name"=> $user->getName(),
-                "iat"=> time(),
-                "exp"=> time() + 60*60*60*60,
+                "iat"=> $data ->getTimestamp(),
+                "exp"=> $data->getTimestamp() + 50*50*50
         ];
         return JWT::encode($payload, $this->jwt, 'HS256');
     }
