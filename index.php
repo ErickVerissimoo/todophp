@@ -12,7 +12,6 @@ use Erick\Todo\service\AuthServiceImpl;
 use Erick\Todo\service\TaskService;
 use Flight;
 
-use function PHPUnit\Framework\isNull;
 
 $medoo = include_once 'src/utils/DatabaseConfig.php';
 $auth = new AuthServiceImpl(mapper: new UserMapper($medoo));
@@ -22,7 +21,7 @@ $task = new TaskService(repository: new TaskMapper($medoo));
 $callable = function () use ($auth) {
     $header = Flight::request()->getHeader('Authorization');
     
-if (empty($header) || $header === null) {
+if (empty($header)) {
         Flight::jsonHalt(['message' => 'Without authentication'], 401);
     }
 if(str_starts_with($header,'Bearer ')) {
