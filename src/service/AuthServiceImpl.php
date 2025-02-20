@@ -6,6 +6,8 @@ use Erick\Todo\entities\User;
 use Erick\Todo\mapper\UserMapper;
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class AuthServiceImpl implements AuthService
 {
     private string $jwt;
@@ -16,10 +18,10 @@ class AuthServiceImpl implements AuthService
     }    /**
      * @inheritDoc
      */
-    public function login(User $usuario):string {
-      $email = $usuario->getEmail();
-        $user = $this->auth->get(email:$email, id:$usuario->getId());
-        if(!password_verify($usuario->getPassword(), $user->getPassword())) {
+    public function login(array $dados):string {
+      $email = $dados['email'];
+        $user = $this->auth->get(email:$email, id:null);
+        if(!password_verify($dados['password'], $user->getPassword())) {
             throw new Exception('Email ou senha inválidos');
         }
 
@@ -43,4 +45,9 @@ class AuthServiceImpl implements AuthService
         $this->auth->insert($user);
         return $user;
     }
+
+    function validateToken(string $token) : bool {
+      return  JWT::decode($token,         new Key($token, algorithm: 'HS256'))!==null ;
+    }
+
 }

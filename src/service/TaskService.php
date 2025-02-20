@@ -5,6 +5,7 @@ namespace Erick\Todo\service;
 use Erick\Todo\entities\Task;
 use Erick\Todo\mapper\TaskMapper;
 use Exception;
+use Flight;
 use Generator;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -29,7 +30,7 @@ class TaskService
         $this->repository->update($task);
     }
     public function delete(int $id) : void {
-        $this->repository->delete( $id); 
+        $this->repository->delete( name: $id); 
     }
 
     public function get(?string $name=null, ?int $id=null) : Task {

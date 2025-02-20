@@ -7,5 +7,5 @@ use Erick\Todo\entities\User;
 interface AuthService
 {
     public function register(User $user);
-    public function login(User $user): string;
+    public function login(array $dados): string;
 }

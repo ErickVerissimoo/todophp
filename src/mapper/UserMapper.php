@@ -78,4 +78,9 @@ return $this->medoo->select(
 public function exists(string $email):bool{
 return $this->medoo->count('usuario', ['email'=> $email ]) >0;
 }
+
+    public function getMedoo(): Medoo
+    {
+        return $this->medoo;
+    }
 }

@@ -5,9 +5,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 use Erick\Todo\entities\User;
 use Erick\Todo\mapper\UserMapper;
 class UserService
+
 {
 private UserMapper $mapper;
-
+private AuthService $authService;
 public function __construct(Usermapper $var) {
 $this ->mapper=$var;
 }
